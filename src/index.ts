@@ -12,6 +12,7 @@ let dialogMode = modeEnum.UNKNOWN;
 const addTodoBtn = document.getElementById("add-todo-btn");
 const updateTodoBtn = document.getElementById("update-todo-btn");
 const clearTodoListBtn = document.getElementById("clear-todo-list-btn");
+const todoUL = document.getElementById("todo-list");
 
 // ToDo Dialog
 const todoDialog = document.getElementById("todo-dialog");
@@ -35,19 +36,25 @@ if(clearTodoListBtn !== null)
 else
     console.error("clearTodoListBtn===null");
 
+if(todoUL !== null)
+    todoUL.addEventListener('click', todoListClicked);
+else
+    console.error("todoUL===null");
+
+
 // Main Window event handlers
 
-function AddTodoBtnClicked(e: Event) {
+function AddTodoBtnClicked(e: Event): void {
     dialogMode = modeEnum.ADD;
     showTodoDialog("");
 }
 
-function UpdateTodoBtnClicked(e: Event) {
+function UpdateTodoBtnClicked(e: Event): void {
     dialogMode = modeEnum.UPDATE;
     showTodoDialog("Current todo text");
 }
 
-function addTodo(text: string) {
+function addTodo(text: string): void {
     const todo = {
         id: todos.nextId++,
         text: todoDialogTextArea.value,
@@ -57,17 +64,32 @@ function addTodo(text: string) {
     setTodosLS(todos);
 }
 
-function updateTodo(todo: Todo) {
+function updateTodo(todo: Todo): void {
 
 }
 
-function clearTodos() {
+function clearTodos(): void {
     todos = {
         nextId: 0,
         todos: []
     }
     setTodosLS(todos);
 }
+
+function todoListClicked(e: Event): void {
+    const element = e.target as HTMLElement | null;
+    if(element !== null && element.tagName === 'BUTTON') {
+        switch(element.tagName.toLowerCase()) {
+            case 'button':
+                break;
+            case 'li':
+                break;
+            case 'p':
+                break;
+        }
+    }
+}
+
 
 // ToDo Dialog
 if(todoDialogOkBtn !== null)
@@ -81,14 +103,14 @@ else
     console.error("todoDialogCancelBtn===null");
     
 
-function showTodoDialog(todoText: string) {
+function showTodoDialog(todoText: string): void {
     if(todoDialog !== null) {
         todoDialogTextArea.value = todoText;
         (todoDialog as HTMLDialogElement).showModal();
     }
 }
 
-function closeTodoDialog() {
+function closeTodoDialog(): void {
     if(todoDialogTextArea !== null)
         (todoDialogTextArea as HTMLTextAreaElement).value = "";
 
@@ -96,7 +118,7 @@ function closeTodoDialog() {
         (todoDialog as HTMLDialogElement).close();
 }
 
-function todoDialogOkClicked(e: MouseEvent) {
+function todoDialogOkClicked(e: MouseEvent): void {
     if(todoDialogTextArea === null || (todoDialogTextArea as HTMLTextAreaElement).value === "") {
         return;
     }
@@ -115,7 +137,7 @@ function todoDialogOkClicked(e: MouseEvent) {
     closeTodoDialog();
 }
 
-function todoDialogCancelClicked(e: MouseEvent) {
+function todoDialogCancelClicked(e: MouseEvent): void {
     closeTodoDialog();
 }
 

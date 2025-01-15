@@ -1,3 +1,5 @@
+/* General */
+
 *::before,
 *::after,
 * {
@@ -32,6 +34,8 @@ h2 {
     margin: 2rem auto;
 }
 
+/* Todo Buttons */
+
 .button-container {
     height: fit-content;
     margin: 2rem auto;
@@ -51,6 +55,50 @@ button {
     font-size: 2rem;
     font-weight: 700;
 }
+
+/* Todo List */
+
+#todo-list {
+    margin: 0 auto;
+    margin-top: 8rem;
+    width: 50%;
+    text-align: left;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    font-weight: 500;
+    border: 2px solid #ccc;
+    list-style-type: none;
+}
+
+#todo-list li{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border-bottom: 2px solid #ccc;
+    background-color: #FFF;
+}
+
+#todo-list button  {
+    margin-right: 2rem;
+    cursor: pointer;
+}
+
+#todo-list li:last-child{
+    border-bottom: none;
+}
+
+#todo-list li:nth-of-type(odd){
+    background-color: #f0f0f0;
+}
+
+#todo-list li:hover {
+    background-color: #cbf3fa;
+    cursor: pointer;
+}
+
+/* Todo Dialog */
 
 dialog {
     margin: auto;
