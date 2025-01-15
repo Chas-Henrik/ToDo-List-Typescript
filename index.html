@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./img/favicon.png" type="image/png">
+    <link rel="stylesheet" href="./styles/index.css">
+    <title>ToDo List Typescript</title>
+    <script type="module" src="./public/index.js"></script>
+</head>
+<body>
+    <main>
+        <h1 class="align-center">Todo List</h1>
+        <div class="button-container">
+            <button id="add-todo-btn" type="button">Add Todo</button>
+            <button id="update-todo-btn" type="button">Update Todo</button>
+            <button id="clear-todo-list-btn" type="button">Clear Todo List</button>
+        </div>
+        <ul id="todo-list" class="align-center"></ul>
+    </main>
+    <dialog id="todo-dialog">
+        <h2>ToDo</h2>
+        <textarea id="todo-dialog-textarea" placeholder="Write your ToDo here..." required></textarea>
+        <div>
+            <button id="todo-dialog-ok-btn" type="submit">Ok</button>
+            <button id="todo-dialog-cancel-btn" type="button">Cancel</button>
+        </div>
+    </dialog>
+</body>
+</html>

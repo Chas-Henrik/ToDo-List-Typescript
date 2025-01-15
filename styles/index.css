@@ -1,0 +1,90 @@
+*::before,
+*::after,
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    font-family: Roboto, sans-serif;
+    font-size: 62.5%;
+}
+
+.align-center {
+    text-align: center;
+}
+
+body {
+    padding: 5rem;
+    background-color: beige;
+}
+
+h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+}
+
+h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 2rem auto;
+}
+
+.button-container {
+    height: fit-content;
+    margin: 2rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+button {
+    width: 20rem;
+    padding: 1rem 2rem;
+    box-shadow: 2px 2px 10px 0px #00000033;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+dialog {
+    margin: auto;
+    height: 50%;
+    max-width: 130rem;
+    padding: 0 2rem;
+    border-radius: 10px;
+    background-color: beige;
+
+    h2 {
+        height: 10%;
+        /* margin: 2rem auto; */
+        font-size: 3rem;
+        font-weight: 700;
+        text-align: center;
+    }
+    textarea {
+        margin: 0 auto;
+        min-width: 100%;
+        min-height: 2rem;
+        height: 60%;
+        padding: 1rem;
+        font-size: 1.6rem;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        resize: none;
+    }
+    div {
+        height: fit-content;
+        margin: 2rem auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+    }
+}
+
