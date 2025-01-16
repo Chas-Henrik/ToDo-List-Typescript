@@ -1,6 +1,6 @@
-import { Todo, Todos } from "./types.js"
+import { Todos } from "./types.js"
 
-const defaultTodos = {
+const defaultTodos: Todos = {
     nextId: 0,
     todos: []
 }
@@ -9,7 +9,7 @@ const TODO_NAME = "Todo-List-Typescript";
 
 export function getTodosLS(): Todos {
     try {
-        const lsTodos = localStorage.getItem(TODO_NAME);
+        const lsTodos: (string | null) = localStorage.getItem(TODO_NAME);
         return lsTodos ? JSON.parse(lsTodos) : defaultTodos;
     } catch(error) {
         console.error(error);

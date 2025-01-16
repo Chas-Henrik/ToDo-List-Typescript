@@ -5,118 +5,165 @@ import { getTodosLS, setTodosLS } from "./ls.js";
 enum modeEnum {UNKNOWN, ADD, UPDATE};
 
 // Global Variables
-let todos = getTodosLS();
+let todosObj: Todos = getTodosLS();
+let dialogTodo: (Todo|null) = null;
 let dialogMode = modeEnum.UNKNOWN;
 
-// Main Window
-const addTodoBtn = document.getElementById("add-todo-btn");
-const updateTodoBtn = document.getElementById("update-todo-btn");
-const clearTodoListBtn = document.getElementById("clear-todo-list-btn");
-const todoUL = document.getElementById("todo-list");
+// Main Window elements
+const addTodoBtn:(HTMLElement | null) = document.getElementById("add-todo-btn");
+const clearTodoListBtn:(HTMLElement | null) = document.getElementById("clear-todo-list-btn");
+const todoUL:(HTMLElement | null) = document.getElementById("todo-list");
 
-// ToDo Dialog
-const todoDialog = document.getElementById("todo-dialog");
-const todoDialogTextArea = document.getElementById("todo-dialog-textarea") as HTMLTextAreaElement;
-const todoDialogOkBtn = document.getElementById("todo-dialog-ok-btn");
-const todoDialogCancelBtn = document.getElementById("todo-dialog-cancel-btn");
+// ToDo Dialog elements
+const todoDialog:(HTMLElement | null) = document.getElementById("todo-dialog");
+const todoDialogTextArea:(HTMLTextAreaElement | null) = document.getElementById("todo-dialog-textarea") as HTMLTextAreaElement;
+const todoDialogOkBtn:(HTMLElement | null) = document.getElementById("todo-dialog-ok-btn");
+const todoDialogCancelBtn:(HTMLElement | null) = document.getElementById("todo-dialog-cancel-btn");
 
-// Main Window event listeners
-if(addTodoBtn !== null)
+
+
+// Add Main Window event listeners
+
+if(addTodoBtn)
     addTodoBtn.addEventListener('click', AddTodoBtnClicked);
 else
     console.error("addTodoBtn===null");
-
-if(updateTodoBtn !== null)
-    updateTodoBtn.addEventListener('click', UpdateTodoBtnClicked);
-else
-    console.error("updateTodoBtn===null");
     
-if(clearTodoListBtn !== null)
-    clearTodoListBtn.addEventListener('click', clearTodos);
+if(clearTodoListBtn)
+    clearTodoListBtn.addEventListener('click', clearTodoListClicked);
 else
     console.error("clearTodoListBtn===null");
 
-if(todoUL !== null)
+if(todoUL)
     todoUL.addEventListener('click', todoListClicked);
 else
     console.error("todoUL===null");
 
 
-// Main Window event handlers
 
-function AddTodoBtnClicked(e: Event): void {
+// Main Window event listeners
+
+function AddTodoBtnClicked(_: MouseEvent): void {
     dialogMode = modeEnum.ADD;
-    showTodoDialog("");
+    showTodoDialog(null);
 }
 
-function UpdateTodoBtnClicked(e: Event): void {
-    dialogMode = modeEnum.UPDATE;
-    showTodoDialog("Current todo text");
-}
-
-function addTodo(text: string): void {
-    const todo = {
-        id: todos.nextId++,
-        text: todoDialogTextArea.value,
-        done: false
-    }
-    todos.todos.push(todo);
-    setTodosLS(todos);
-}
-
-function updateTodo(todo: Todo): void {
-
-}
-
-function clearTodos(): void {
-    todos = {
+function clearTodoListClicked(_: MouseEvent): void {
+    todosObj = {
         nextId: 0,
         todos: []
     }
-    setTodosLS(todos);
+    setTodosLS(todosObj);
+    renderTodoList();
 }
 
 function todoListClicked(e: Event): void {
-    const element = e.target as HTMLElement | null;
-    if(element !== null && element.tagName === 'BUTTON') {
-        switch(element.tagName.toLowerCase()) {
-            case 'button':
-                break;
-            case 'li':
-                break;
-            case 'p':
-                break;
+    const element:(HTMLElement | null) = e.target as HTMLElement | null;
+    if(element) {
+        const parentElement:(HTMLElement | null) = element.parentElement as HTMLElement | null;
+        if(parentElement) {
+            let id: number;
+            let foundTodo: (Todo|null);
+            switch(element.tagName.toLowerCase()) {
+                case 'button':
+                    id = parseInt(parentElement.dataset.id || '-1');
+                    if(deleteTodo(id))
+                        renderTodoList();
+                    break;
+                case 'p':
+                    id = parseInt(parentElement.dataset.id || '-1');
+                    foundTodo = findTodo(id);
+                    if(foundTodo) {
+                        dialogMode = modeEnum.UPDATE;
+                        showTodoDialog(foundTodo);
+                    }
+                    break;
+                case 'input':
+                    id = parseInt(parentElement.dataset.id || '-1');
+                    foundTodo = findTodo(id);
+                    if(foundTodo) {
+                        foundTodo.done = (element as HTMLInputElement).checked;
+                        setTodosLS(todosObj);
+                        renderTodoList();
+                    }
+                    break;
+            }
         }
     }
 }
 
 
-// ToDo Dialog
-if(todoDialogOkBtn !== null)
+// Main Window functions
+
+function findTodo(id: number): (Todo | null) {
+    const index:number = todosObj.todos.findIndex((todo) => todo.id === id);
+    if(index !== -1) {
+        return todosObj.todos[index];
+    }
+    return null;
+}
+
+function addTodo(todoStr: string): void {
+    const todo: Todo = {
+        id: todosObj.nextId++,
+        text: todoStr,
+        done: false
+    }
+    todosObj.todos.push(todo);
+    setTodosLS(todosObj);
+}
+
+function updateTodo(id:number, todoStr: string): void {
+    const foundTodo:(Todo | null) = findTodo(id);
+    if(foundTodo) {
+        foundTodo.text = todoStr;
+        setTodosLS(todosObj);
+    }
+}
+
+function deleteTodo(id: number): boolean {
+    const index:number = todosObj.todos.findIndex((todo) => todo.id === id);
+    if(index !== -1) {
+        todosObj.todos.splice(index,1);
+        setTodosLS(todosObj);
+        return true;
+    }
+    return false;
+}
+
+function renderTodoList(): void {
+    if(todoUL) {
+        todoUL.innerHTML = todosObj.todos.map((todo) => {
+            const checked:string = (todo.done) ? "checked": "";
+            return `
+            <li class="grid-list" data-id=${todo.id}>
+                <button title="Delete todo">X</button>
+                <p title="Update todo">${todo.text}</p>
+                <input type="checkbox" title="Toggle done" ${checked}>
+            </li>`;
+        }).join('');
+    }
+}
+
+
+// Todo Dialog
+
+
+// Add Todo Dialog event listeners
+
+if(todoDialogOkBtn)
     todoDialogOkBtn.addEventListener('click', todoDialogOkClicked);
 else
     console.error("todoDialogOkBtn===null");
 
-if(todoDialogCancelBtn !== null)
+if(todoDialogCancelBtn)
     todoDialogCancelBtn.addEventListener('click', todoDialogCancelClicked);
 else
     console.error("todoDialogCancelBtn===null");
     
 
-function showTodoDialog(todoText: string): void {
-    if(todoDialog !== null) {
-        todoDialogTextArea.value = todoText;
-        (todoDialog as HTMLDialogElement).showModal();
-    }
-}
 
-function closeTodoDialog(): void {
-    if(todoDialogTextArea !== null)
-        (todoDialogTextArea as HTMLTextAreaElement).value = "";
-
-    if(todoDialog !== null)
-        (todoDialog as HTMLDialogElement).close();
-}
+// Todo Dialog event listeners
 
 function todoDialogOkClicked(e: MouseEvent): void {
     if(todoDialogTextArea === null || (todoDialogTextArea as HTMLTextAreaElement).value === "") {
@@ -126,10 +173,16 @@ function todoDialogOkClicked(e: MouseEvent): void {
     switch(dialogMode) {
         case modeEnum.ADD:
             addTodo(todoDialogTextArea.value);
+            renderTodoList();
             break;
         case modeEnum.UPDATE:
+            if(dialogTodo){
+                updateTodo(dialogTodo.id, todoDialogTextArea.value)
+                renderTodoList();
+            }
             break;
         case modeEnum.UNKNOWN:
+            console.error("todoDialogOkClicked - Error: dialogMode is modeEnum.UNKNOWN")
             break;
     }
 
@@ -137,7 +190,32 @@ function todoDialogOkClicked(e: MouseEvent): void {
     closeTodoDialog();
 }
 
-function todoDialogCancelClicked(e: MouseEvent): void {
+function todoDialogCancelClicked(_: MouseEvent): void {
     closeTodoDialog();
 }
 
+
+// Todo Dialog functions
+
+function showTodoDialog(todo: (Todo|null)): void {
+    dialogTodo = todo;
+    if(todoDialogTextArea) {
+        (todoDialogTextArea as HTMLTextAreaElement).value = (dialogTodo)? dialogTodo.text : '';
+    }
+    if(todoDialog) {
+        (todoDialog as HTMLDialogElement).showModal();
+    }
+}
+
+function closeTodoDialog(): void {
+    if(todoDialogTextArea)
+        (todoDialogTextArea as HTMLTextAreaElement).value = "";
+
+    if(todoDialog)
+        (todoDialog as HTMLDialogElement).close();
+}
+
+
+// Global Initializations
+
+renderTodoList();

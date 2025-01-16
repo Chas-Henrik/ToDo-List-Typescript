@@ -10,13 +10,17 @@
 </head>
 <body>
     <main>
-        <h1 class="align-center">Todo List</h1>
+        <h1 class="text-align-center">Todo List</h1>
         <div class="button-container">
-            <button id="add-todo-btn" type="button">Add Todo</button>
-            <button id="update-todo-btn" type="button">Update Todo</button>
-            <button id="clear-todo-list-btn" type="button">Clear Todo List</button>
+            <button id="add-todo-btn" type="button" title="Add new todo">Add Todo</button>
+            <button id="clear-todo-list-btn" type="button" title="Clear the entire todo list">Clear List</button>
         </div>
-        <ul id="todo-list" class="align-center"></ul>
+        <div id="todo-list-caption" class="grid-container-width grid-list-caption grid-list-caption-font">
+            <p class="text-align-center">Delete</p>
+            <p class="text-align-left">Description</p>
+            <p class="text-align-center">Done</p>
+        </div>
+        <ul id="todo-list" class="grid-container-width grid-container-height grid-list-font"></ul>
     </main>
     <dialog id="todo-dialog">
         <h2>ToDo</h2>

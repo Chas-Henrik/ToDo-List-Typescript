@@ -7,4 +7,5 @@ export type Todo = {
 export type Todos = {
     nextId: number,
     todos: Todo[]
-} 
+}
+
