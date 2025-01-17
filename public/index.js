@@ -73,7 +73,6 @@ function todoListClicked(e) {
                     if (foundTodo) {
                         foundTodo.done = element.checked;
                         setTodosLS(todosObj);
-                        renderTodoList();
                     }
                     break;
             }

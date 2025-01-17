@@ -147,18 +147,19 @@ h2 {
     border: 2px solid #ccc;
 
     h2 {
-        height: 10%;
+        height: 3rem;
         font-size: 3rem;
+        line-height: 3rem;
         font-weight: 700;
         text-align: center;
     }
     form {
-        height: calc(90% - 6rem);
+        height: calc(100% - 11rem);
         textarea {
             margin: 0 auto;
             min-width: 100%;
             min-height: 2rem;
-            height: 70%;
+            height: calc(100% - 6rem);
             padding: 1rem;
             font-size: 1.6rem;
             border: 2px solid #ccc;
@@ -166,7 +167,7 @@ h2 {
             resize: none;
         }
         div {
-            height: fit-content;
+            height: 6rem;
             margin: 2rem auto;
             display: flex;
             justify-content: center;
