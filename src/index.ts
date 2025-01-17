@@ -84,7 +84,6 @@ function todoListClicked(e: Event): void {
                     if(foundTodo) {
                         foundTodo.done = (element as HTMLInputElement).checked;
                         setTodosLS(todosObj);
-                        renderTodoList();
                     }
                     break;
             }
