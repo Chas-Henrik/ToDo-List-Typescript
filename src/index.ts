@@ -138,17 +138,8 @@ function renderTodoList(): void {
 
 // Add Todo Dialog event listeners
 
-if(todoDialogOkBtn)
-    todoDialogOkBtn.addEventListener('click', todoDialogOkClicked);
-else
-    console.error("todoDialogOkBtn===null");
-
-if(todoDialogCancelBtn)
-    todoDialogCancelBtn.addEventListener('click', todoDialogCancelClicked);
-else
-    console.error("todoDialogCancelBtn===null");
-    
-
+todoDialogOkBtn?.addEventListener('click', todoDialogOkClicked);
+todoDialogCancelBtn?.addEventListener('click', todoDialogCancelClicked);
 
 // Todo Dialog event listeners
 

@@ -21,18 +21,9 @@ const todoDialogTextArea = document.getElementById("todo-dialog-textarea");
 const todoDialogOkBtn = document.getElementById("todo-dialog-ok-btn");
 const todoDialogCancelBtn = document.getElementById("todo-dialog-cancel-btn");
 // Add Main Window event listeners
-if (addTodoBtn)
-    addTodoBtn.addEventListener('click', AddTodoBtnClicked);
-else
-    console.error("addTodoBtn===null");
-if (clearTodoListBtn)
-    clearTodoListBtn.addEventListener('click', clearTodoListClicked);
-else
-    console.error("clearTodoListBtn===null");
-if (todoUL)
-    todoUL.addEventListener('click', todoListClicked);
-else
-    console.error("todoUL===null");
+addTodoBtn === null || addTodoBtn === void 0 ? void 0 : addTodoBtn.addEventListener('click', AddTodoBtnClicked);
+clearTodoListBtn === null || clearTodoListBtn === void 0 ? void 0 : clearTodoListBtn.addEventListener('click', clearTodoListClicked);
+todoUL === null || todoUL === void 0 ? void 0 : todoUL.addEventListener('click', todoListClicked);
 // Main Window event listeners
 function AddTodoBtnClicked(_) {
     dialogMode = modeEnum.ADD;
@@ -127,14 +118,8 @@ function renderTodoList() {
 }
 // Todo Dialog
 // Add Todo Dialog event listeners
-if (todoDialogOkBtn)
-    todoDialogOkBtn.addEventListener('click', todoDialogOkClicked);
-else
-    console.error("todoDialogOkBtn===null");
-if (todoDialogCancelBtn)
-    todoDialogCancelBtn.addEventListener('click', todoDialogCancelClicked);
-else
-    console.error("todoDialogCancelBtn===null");
+todoDialogOkBtn === null || todoDialogOkBtn === void 0 ? void 0 : todoDialogOkBtn.addEventListener('click', todoDialogOkClicked);
+todoDialogCancelBtn === null || todoDialogCancelBtn === void 0 ? void 0 : todoDialogCancelBtn.addEventListener('click', todoDialogCancelClicked);
 // Todo Dialog event listeners
 function todoDialogOkClicked(e) {
     if (todoDialogTextArea === null || todoDialogTextArea.value === "") {
