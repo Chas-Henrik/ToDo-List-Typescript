@@ -24,21 +24,9 @@ const todoDialogCancelBtn:(HTMLElement | null) = document.getElementById("todo-d
 
 // Add Main Window event listeners
 
-if(addTodoBtn)
-    addTodoBtn.addEventListener('click', AddTodoBtnClicked);
-else
-    console.error("addTodoBtn===null");
-    
-if(clearTodoListBtn)
-    clearTodoListBtn.addEventListener('click', clearTodoListClicked);
-else
-    console.error("clearTodoListBtn===null");
-
-if(todoUL)
-    todoUL.addEventListener('click', todoListClicked);
-else
-    console.error("todoUL===null");
-
+addTodoBtn?.addEventListener('click', AddTodoBtnClicked);
+clearTodoListBtn?.addEventListener('click', clearTodoListClicked);
+todoUL?.addEventListener('click', todoListClicked);
 
 
 // Main Window event listeners
