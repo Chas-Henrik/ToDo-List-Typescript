@@ -180,17 +180,14 @@ function showTodoDialog(todo: (Todo|null)): void {
     if(todoDialogTextArea) {
         (todoDialogTextArea as HTMLTextAreaElement).value = (dialogTodo)? dialogTodo.text : '';
     }
-    if(todoDialog) {
-        (todoDialog as HTMLDialogElement).showModal();
-    }
+    (todoDialog as HTMLDialogElement)?.showModal();
 }
 
 function closeTodoDialog(): void {
     if(todoDialogTextArea)
         (todoDialogTextArea as HTMLTextAreaElement).value = "";
 
-    if(todoDialog)
-        (todoDialog as HTMLDialogElement).close();
+    (todoDialog as HTMLDialogElement)?.close();
 }
 
 
